@@ -41,6 +41,15 @@ pub fn xnor(a: bool, b: bool) -> bool {
     !(a ^ b)
 }
 
+// Multiplexer
+pub fn mux(a: bool, b: bool, sel: bool) -> bool {
+    (a && !sel) || (b && sel)
+}
+
+// Demultiplexer
+pub fn demux(input: bool, sel: bool) -> (bool, bool) {
+    (input && !sel, input && sel)
+}
 
 #[cfg(test)]
 mod tests {
@@ -98,5 +107,35 @@ mod tests {
         assert_eq!(xnor(true, false), false);
         assert_eq!(xnor(false, true), false);
         assert_eq!(xnor(false, false), true);
+    }
+
+    #[test]
+    fn test_mux() {
+        /*
+            input-a sel output
+            a       0   a
+            a       1   b
+        */
+        assert_eq!(mux(false, false, false), false);
+        assert_eq!(mux(false, false, true),  false);
+        assert_eq!(mux(false, true,  false), false);
+        assert_eq!(mux(false, true,  true),  true); 
+        assert_eq!(mux(true,  false, false), true); 
+        assert_eq!(mux(true,  false, true),  false);
+        assert_eq!(mux(true,  true,  false), true); 
+        assert_eq!(mux(true,  true,  true),  true); 
+    }
+
+    #[test]
+    fn test_demux() {
+        /*
+            input-a sel output-a output-b
+            a       0   0        a
+            a       1   a        0  
+        */
+        assert_eq!(demux(false, false), (false, false));
+        assert_eq!(demux(false, true),  (false, false));
+        assert_eq!(demux(true,  false), (true,  false));
+        assert_eq!(demux(true,  true),  (false, true)); 
     }
 }
