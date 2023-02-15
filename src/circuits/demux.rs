@@ -8,7 +8,6 @@ pub fn demux2x1(a: bool, sel: bool) -> (bool, bool) {
     (a_and_not_sel, a_and_sel)
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

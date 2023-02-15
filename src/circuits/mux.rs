@@ -17,6 +17,15 @@ pub fn muxnx1(a: Vec<bool>, b: Vec<bool>, sel: Vec<bool>) -> Vec<bool> {
     result
 }
 
+// TODO: verify
+pub fn muxnxn(a: Vec<Vec<bool>>, b: Vec<Vec<bool>>, sel: Vec<bool>) -> Vec<Vec<bool>> {
+    let mut result = Vec::new();
+    for i in 0..sel.len() {
+        // TODO: check if this has performance issues
+        result.push(muxnx1(a[i].clone(), b[i].clone(), sel.clone()))
+    }
+    result
+}
 
 
 #[cfg(test)]
@@ -57,5 +66,23 @@ mod tests {
         assert_eq!(muxnx1(vec![false, true],  vec![false, true],  vec![false, true]),  vec![false, true]);  // 0   1   1   1
         assert_eq!(muxnx1(vec![true,  false], vec![true,  false], vec![false, true]),  vec![true,  false]); // 1   0   1   0
         assert_eq!(muxnx1(vec![true,  true],  vec![true,  true],  vec![false, true]),  vec![true,  true]);  // 1   1   1   1
+    }
+
+    #[test]
+    fn test_muxnxn() {
+        /*
+            sel out
+            0   a
+            1   b
+         */
+        //                a,     b,     sel,    output  
+        assert_eq!(muxnxn(vec![vec![false, false], vec![false, false]], vec![vec![false, false], vec![false, false]], vec![false, false]), vec![vec![false, false], vec![false, false]]); // 0   0   0   0
+        assert_eq!(muxnxn(vec![vec![false, true],  vec![false, true]],  vec![vec![false, true],  vec![false, true]],  vec![false, false]), vec![vec![false, true],  vec![false, true]]);  // 0   1   0   0
+        assert_eq!(muxnxn(vec![vec![true,  false], vec![true,  false]], vec![vec![true,  false], vec![true,  false]], vec![false, false]), vec![vec![true,  false], vec![true,  false]]); // 1   0   0   1
+        assert_eq!(muxnxn(vec![vec![true,  true],  vec![true,  true]],  vec![vec![true,  true],  vec![true,  true]],  vec![false, false]), vec![vec![true,  true],  vec![true,  true]]);  // 1   1   0   1
+        assert_eq!(muxnxn(vec![vec![false, false], vec![false, false]], vec![vec![false, false], vec![false, false]], vec![false, true]),  vec![vec![false, false], vec![false, false]]); // 0   0   1   0
+        assert_eq!(muxnxn(vec![vec![false, true],  vec![false, true]],  vec![vec![false, true],  vec![false, true]],  vec![false, true]),  vec![vec![false, true],  vec![false, true]]);  // 0   1   1   1
+        assert_eq!(muxnxn(vec![vec![true,  false], vec![true,  false]], vec![vec![true,  false], vec![true,  false]], vec![false, true]),  vec![vec![true,  false], vec![true,  false]]); // 1   0   1   0
+        assert_eq!(muxnxn(vec![vec![true,  true],  vec![true,  true]],  vec![vec![true,  true],  vec![true,  true]],  vec![false, true]),  vec![vec![true,  true],  vec![true,  true]]);  // 1   1   1   1
     }
 }
