@@ -1,4 +1,6 @@
 mod utils;
+mod gates;
+mod circuits;
 
 use std::fmt;
 use wasm_bindgen::prelude::*;

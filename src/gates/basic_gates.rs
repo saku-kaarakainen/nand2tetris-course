@@ -1,0 +1,102 @@
+// AND Gate
+pub fn and(a: bool, b: bool) -> bool {
+    a && b
+}
+
+// OR Gate
+pub fn or(a: bool, b: bool) -> bool {
+    // Optimized version.
+    // If you want to make OR gate using AND gate, 
+    // you can use DeMorgan's Law:
+    // !(a && b)
+    a || b
+}
+
+// NOT Gate
+pub fn not(a: bool) -> bool {
+    !a
+}
+
+// XOR Gate
+pub fn xor(a: bool, b: bool) -> bool {
+    // Optimized version.
+    // If you want to make XOR gate using AND gate,
+    // you can use DeMorgan's Law:
+    // !(a && b) && (a || b)
+    a ^ b
+}
+
+// NAND Gate
+pub fn nand(a: bool, b: bool) -> bool {
+    !(a && b)
+}
+
+// NOR Gate
+pub fn nor(a: bool, b: bool) -> bool {
+    !(a || b)
+}
+
+// XNOR Gate
+pub fn xnor(a: bool, b: bool) -> bool {
+    !(a ^ b)
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_and() {
+        assert_eq!(and(true, true), true);
+        assert_eq!(and(true, false), false);
+        assert_eq!(and(false, true), false);
+        assert_eq!(and(false, false), false);
+    }
+
+    #[test]
+    fn test_or() {
+        assert_eq!(or(true, true), true);
+        assert_eq!(or(true, false), true);
+        assert_eq!(or(false, true), true);
+        assert_eq!(or(false, false), false);
+    }
+
+    #[test]
+    fn test_not() {
+        assert_eq!(not(true), false);
+        assert_eq!(not(false), true);
+    }
+
+    #[test]
+    fn test_xor() {
+        assert_eq!(xor(true, true), false);
+        assert_eq!(xor(true, false), true);
+        assert_eq!(xor(false, true), true);
+        assert_eq!(xor(false, false), false);
+    }
+
+    #[test]
+    fn test_nand() {
+        assert_eq!(nand(true, true), false);
+        assert_eq!(nand(true, false), true);
+        assert_eq!(nand(false, true), true);
+        assert_eq!(nand(false, false), true);
+    }
+
+    #[test]
+    fn test_nor() {
+        assert_eq!(nor(true, true), false);
+        assert_eq!(nor(true, false), false);
+        assert_eq!(nor(false, true), false);
+        assert_eq!(nor(false, false), true);
+    }
+
+    #[test]
+    fn test_xnor() {
+        assert_eq!(xnor(true, true), true);
+        assert_eq!(xnor(true, false), false);
+        assert_eq!(xnor(false, true), false);
+        assert_eq!(xnor(false, false), true);
+    }
+}
