@@ -117,12 +117,12 @@ mod tests {
             a       1   b
         */
         assert_eq!(mux(false, false, false), false);
-        assert_eq!(mux(false, false, true),  false);
         assert_eq!(mux(false, true,  false), false);
-        assert_eq!(mux(false, true,  true),  true); 
-        assert_eq!(mux(true,  false, false), true); 
-        assert_eq!(mux(true,  false, true),  false);
+        assert_eq!(mux(true,  false, false), true);
         assert_eq!(mux(true,  true,  false), true); 
+        assert_eq!(mux(false, false, true),  false); 
+        assert_eq!(mux(false, true,  true),  true);
+        assert_eq!(mux(true,  false, true),  false); 
         assert_eq!(mux(true,  true,  true),  true); 
     }
 
