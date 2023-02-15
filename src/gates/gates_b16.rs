@@ -56,6 +56,70 @@ mod gates_b16 {
          !(a[12] ^ b[12]), !(a[13] ^ b[13]), !(a[14] ^ b[14]), !(a[15] ^ b[15])]
     }
 
+    // MUX
+    pub fn mux(a: [bool; 16], b: [bool; 16], sel: bool) -> [bool; 16] {
+        [
+            (a[0] && !sel) || (b[0] && sel),
+            (a[1] && !sel) || (b[1] && sel),
+            (a[2] && !sel) || (b[2] && sel),
+            (a[3] && !sel) || (b[3] && sel),
+            (a[4] && !sel) || (b[4] && sel),
+            (a[5] && !sel) || (b[5] && sel),
+            (a[6] && !sel) || (b[6] && sel),
+            (a[7] && !sel) || (b[7] && sel),
+            (a[8] && !sel) || (b[8] && sel),
+            (a[9] && !sel) || (b[9] && sel),
+            (a[10] && !sel) || (b[10] && sel),
+            (a[11] && !sel) || (b[11] && sel),
+            (a[12] && !sel) || (b[12] && sel),
+            (a[13] && !sel) || (b[13] && sel),
+            (a[14] && !sel) || (b[14] && sel),
+            (a[15] && !sel) || (b[15] && sel),
+        ]
+    }
+
+    // DMUX
+    pub fn dmux(a: [bool; 16], sel: bool) -> ([bool; 16], [bool; 16]) {
+        (
+            [
+                a[0] && !sel,
+                a[1] && !sel,
+                a[2] && !sel,
+                a[3] && !sel,
+                a[4] && !sel,
+                a[5] && !sel,
+                a[6] && !sel,
+                a[7] && !sel,
+                a[8] && !sel,
+                a[9] && !sel,
+                a[10] && !sel,
+                a[11] && !sel,
+                a[12] && !sel,
+                a[13] && !sel,
+                a[14] && !sel,
+                a[15] && !sel,
+            ],
+            [
+                a[0] && sel,
+                a[1] && sel,
+                a[2] && sel,
+                a[3] && sel,
+                a[4] && sel,
+                a[5] && sel,
+                a[6] && sel,
+                a[7] && sel,
+                a[8] && sel,
+                a[9] && sel,
+                a[10] && sel,
+                a[11] && sel,
+                a[12] && sel,
+                a[13] && sel,
+                a[14] && sel,
+                a[15] && sel,
+            ],
+        )
+    }
+
 }
 
 #[cfg(test)]
@@ -123,5 +187,21 @@ mod tests {
         assert_eq!(gates_b16::xnor(B16_TRUE, B16_FALSE), B16_FALSE);
         assert_eq!(gates_b16::xnor(B16_FALSE, B16_TRUE), B16_FALSE);                 
         assert_eq!(gates_b16::xnor(B16_FALSE, B16_FALSE), B16_TRUE);
+    }
+
+    #[test]
+    fn test_mux() {
+        assert_eq!(gates_b16::mux(B16_TRUE, B16_FALSE, false), B16_TRUE);
+        assert_eq!(gates_b16::mux(B16_TRUE, B16_FALSE, true), B16_FALSE);
+        assert_eq!(gates_b16::mux(B16_FALSE, B16_TRUE, false), B16_FALSE);                 
+        assert_eq!(gates_b16::mux(B16_FALSE, B16_TRUE, true), B16_TRUE);
+    }
+
+    #[test]
+    fn test_dmux() {
+        assert_eq!(gates_b16::dmux(B16_TRUE, false), (B16_TRUE, B16_FALSE));
+        assert_eq!(gates_b16::dmux(B16_TRUE, true), (B16_FALSE, B16_TRUE));
+        assert_eq!(gates_b16::dmux(B16_FALSE, false), (B16_FALSE, B16_FALSE));                 
+        assert_eq!(gates_b16::dmux(B16_FALSE, true), (B16_FALSE, B16_FALSE));
     }
 }
