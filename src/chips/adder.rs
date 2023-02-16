@@ -11,35 +11,10 @@ pub fn full_adder(a: bool, b: bool, c: bool) -> (bool, bool) {
 pub fn adder_rca_lsb_b16(a: [bool; 16], b: [bool; 16], cin: bool) -> ([bool; 16], bool) {
     // bit order here is LSB
     let (sum00, c01) = full_adder(a[0], b[0], cin);
-    print!(
-        "a[0]:{}, b[0]:{}, cin:{} => o[0]:{} c01:{}\n",
-        a[0], b[0], cin, sum00, c01
-    );
-
     let (sum01, c02) = full_adder(a[1], b[1], c01);
-    print!(
-        "a[1]:{}, b[1]:{}, c01:{} => o[1]:{} c02:{}\n",
-        a[1], b[1], c01, sum01, c02
-    );
-
     let (sum02, c03) = full_adder(a[2], b[2], c02);
-    print!(
-        "a[2]:{}, b[2]:{}, c02:{} => o[2]:{} c03:{}\n",
-        a[2], b[2], c02, sum02, c03
-    );
-
     let (sum03, c04) = full_adder(a[3], b[3], c03);
-    print!(
-        "a[3]:{}, b[3]:{}, c03:{} => o[3]:{} c04:{}\n",
-        a[3], b[3], c03, sum03, c04
-    );
-
     let (sum04, c05) = full_adder(a[4], b[4], c04);
-    print!(
-        "a[4]:{}, b[4]:{}, c04:{} => o[4]:{} c05:{}\n",
-        a[4], b[4], c04, sum04, c05
-    );
-
     let (sum05, c06) = full_adder(a[5], b[5], c05);
     let (sum06, c07) = full_adder(a[6], b[6], c06);
     let (sum07, c08) = full_adder(a[7], b[7], c07);
