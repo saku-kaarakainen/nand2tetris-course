@@ -14,34 +14,39 @@ pub fn adder_rca_b16 (a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     // not really performant.
     // If you want to have more opttimized circuit,
     // you should use carry-look-ahead adder.
-    let (sum1, carry1) = full_adder(a[0], b[0], false);
-    let (sum2, carry2) = full_adder(a[1], b[1], carry1);
-    let (sum3, carry3) = full_adder(a[2], b[2], carry2);
-    let (sum4, carry4) = full_adder(a[3], b[3], carry3);
-    let (sum5, carry5) = full_adder(a[4], b[4], carry4);
-    let (sum6, carry6) = full_adder(a[5], b[5], carry5);
-    let (sum7, carry7) = full_adder(a[6], b[6], carry6);
-    let (sum8, carry8) = full_adder(a[7], b[7], carry7);
-    let (sum9, carry9) = full_adder(a[8], b[8], carry8);
-    let (sum10, carry10) = full_adder(a[9], b[9], carry9);
-    let (sum11, carry11) = full_adder(a[10], b[10], carry10);
-    let (sum12, carry12) = full_adder(a[11], b[11], carry11);
-    let (sum13, carry13) = full_adder(a[12], b[12], carry12);
-    let (sum14, carry14) = full_adder(a[13], b[13], carry13);
-    let (sum15, carry15) = full_adder(a[14], b[14], carry14);
-    let (sum16, carry16) = full_adder(a[15], b[15], carry15);
-    [sum1, sum2, sum3, sum4, sum5, sum6, sum7, sum8, sum9, sum10, sum11, sum12, sum13, sum14, sum15, sum16]
+    let (sum00, carry00) = full_adder(a[0], b[0], false);
+    let (sum01, carry01) = full_adder(a[1], b[1], carry00);
+    let (sum02, carry02) = full_adder(a[2], b[2], carry01);
+    let (sum03, carry03) = full_adder(a[3], b[3], carry02);
+    let (sum04, carry04) = full_adder(a[4], b[4], carry03);
+    let (sum05, carry05) = full_adder(a[5], b[5], carry04);
+    let (sum06, carry06) = full_adder(a[6], b[6], carry05);
+    let (sum07, carry07) = full_adder(a[7], b[7], carry06);
+    let (sum08, carry08) = full_adder(a[8], b[8], carry07);
+    let (sum09, carry09) = full_adder(a[9], b[9], carry08);
+    let (sum10, carry10) = full_adder(a[10], b[10], carry09);
+    let (sum11, carry11) = full_adder(a[11], b[11], carry10);
+    let (sum12, carry12) = full_adder(a[12], b[12], carry11);
+    let (sum13, carry13) = full_adder(a[13], b[13], carry12);
+    let (sum14, carry14) = full_adder(a[14], b[14], carry13);
+    let (sum15, _) = full_adder(a[15], b[15], carry14);
+    
+    [   sum00, sum01, sum02, sum03, 
+        sum04, sum05, sum06, sum07, 
+        sum08, sum09, sum10, sum11, 
+        sum12, sum13, sum14, sum15]
 }
 
 mod tests {
     use super::*;
 
     fn b16_to_int(bin: [bool; 16]) -> u16 {
-        let binary_string: String = binary.iter()
+        let binary_string: String = bin.iter()
             .map(|&b| if b { "1" } else { "0" }).collect();
         u16::from_str_radix(&binary_string, 2).unwrap()
     }
 
+    // Util method for testing
     fn int_to_b16(num: u16) -> [bool; 16] {
         let binary_string = format!("{:016b}", num);
         let mut binary = [false; 16];
@@ -49,6 +54,30 @@ mod tests {
             binary[i] = c == '1';
         }
         binary
+    }
+
+    #[test]
+    fn test_internal_int_to_b16() {
+        // test the internal method
+        // in order to make sure correct values
+        let b16_0 = [ false, false, false, false, 
+                                false, false, false, false,
+                                false, false, false, false, 
+                                false, false, false, false];
+        
+        let b16_43690 = [ true, false, true, false, 
+                                true, false, true, false,
+                                true, false, true, false, 
+                                true, false, true, false];
+
+        let b16_65535 = [ true, true, true, true, 
+                                true, true, true, true,
+                                true, true, true, true, 
+                                true, true, true, true];
+       
+        assert_eq!(int_to_b16(0),     b16_0);
+        assert_eq!(int_to_b16(43690), b16_43690);
+        assert_eq!(int_to_b16(65535), b16_65535);   
     }
 
     #[test]
@@ -73,30 +102,16 @@ mod tests {
 
     #[test]
     fn test_adder_rca_b16() {
-        panic("test");
-        
-        // 43690 = 1010101010101010
-        let b16_43690 = [ true, false, true, false, 
-                    true, false, true, false, 
-                    true, false, true, false, 
-                    true, false, true, false];
+        let ex_int = 55555;
+        let ex = int_to_b16(ex_int);
+        let res = adder_rca_b16(
+            int_to_b16(22222), 
+            int_to_b16(33333));
 
-        // 12345 = 0011000000111001
-        let b16_12345 = [ false, false, true, true, 
-                    false, false, false, false, 
-                    false, false, true, true, 
-                    true, false, false, true];
+        let res_as_int = b16_to_int(res);
+        print!("\n\nex : {:04x}\n", ex_int);
+        print!("res: {:04x}\n\n", res_as_int);
 
-        //     1 1
-        //   4 3 6 9 0 
-        // + 1 2 3 4 5 
-        // = 5 6 0 3 5 
-        // 56035 = 1101 1010 1110 0011
-        let b16_56035 = [ true, true, false, true, 
-                    true, false, true, false, 
-                    true, true, true, false, 
-                    false, false, true, true];
-
-        assert_eq!(adder_rca_b16(b16_43690, b16_12345), b16_56035);
+        assert_eq!(ex, res);
     }
 }
