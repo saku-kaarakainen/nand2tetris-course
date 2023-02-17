@@ -1,13 +1,15 @@
+use super::gates_b1::and;
 
-// AND Gate
+
+/// 16-bit AND Gate
 pub fn and16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
-    [a[0] && b[0], a[1] && b[1], a[2] && b[2], a[3] && b[3],
+    [and(a[0], b[0]), a[1] && b[1], a[2] && b[2], a[3] && b[3],
         a[4] && b[4], a[5] && b[5], a[6] && b[6], a[7] && b[7],
         a[8] && b[8], a[9] && b[9], a[10] && b[10], a[11] && b[11],
         a[12] && b[12], a[13] && b[13], a[14] && b[14], a[15] && b[15]]
 }
 
-// OR Gate
+/// 16-bit  OR Gate
 pub fn or16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     [a[0] || b[0], a[1] || b[1], a[2] || b[2], a[3] || b[3],
         a[4] || b[4], a[5] || b[5], a[6] || b[6], a[7] || b[7],
@@ -15,13 +17,13 @@ pub fn or16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
         a[12] || b[12], a[13] || b[13], a[14] || b[14], a[15] || b[15]]
 }
 
-// NOT Gate
+/// 16-bit  NOT Gate
 pub fn not16(a: [bool; 16]) -> [bool; 16] {
     [!a[0], !a[1], !a[2], !a[3], !a[4], !a[5], !a[6], !a[7],
         !a[8], !a[9], !a[10], !a[11], !a[12], !a[13], !a[14], !a[15]]
 }
 
-// XOR Gate
+/// 16-bit  XOR Gate
 pub fn xor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     [a[0] ^ b[0], a[1] ^ b[1], a[2] ^ b[2], a[3] ^ b[3],
         a[4] ^ b[4], a[5] ^ b[5], a[6] ^ b[6], a[7] ^ b[7],
@@ -29,7 +31,7 @@ pub fn xor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
         a[12] ^ b[12], a[13] ^ b[13], a[14] ^ b[14], a[15] ^ b[15]]
 }
 
-// NAND Gate
+/// 16-bit  NAND Gate
 pub fn nand16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     [!(a[0] && b[0]), !(a[1] && b[1]), !(a[2] && b[2]), !(a[3] && b[3]),
         !(a[4] && b[4]), !(a[5] && b[5]), !(a[6] && b[6]), !(a[7] && b[7]),
@@ -37,7 +39,7 @@ pub fn nand16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
         !(a[12] && b[12]), !(a[13] && b[13]), !(a[14] && b[14]), !(a[15] && b[15])]
 }
 
-// NOR Gate
+/// 16-bit  NOR Gate
 pub fn nor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     [!(a[0] || b[0]), !(a[1] || b[1]), !(a[2] || b[2]), !(a[3] || b[3]),
         !(a[4] || b[4]), !(a[5] || b[5]), !(a[6] || b[6]), !(a[7] || b[7]),
@@ -45,7 +47,7 @@ pub fn nor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
         !(a[12] || b[12]), !(a[13] || b[13]), !(a[14] || b[14]), !(a[15] || b[15])]
 }
 
-// XNOR Gate
+/// 16-bit  XNOR Gate
 pub fn xnor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
     [!(a[0] ^ b[0]), !(a[1] ^ b[1]), !(a[2] ^ b[2]), !(a[3] ^ b[3]),
         !(a[4] ^ b[4]), !(a[5] ^ b[5]), !(a[6] ^ b[6]), !(a[7] ^ b[7]),
@@ -53,7 +55,7 @@ pub fn xnor16(a: [bool; 16], b: [bool; 16]) -> [bool; 16] {
         !(a[12] ^ b[12]), !(a[13] ^ b[13]), !(a[14] ^ b[14]), !(a[15] ^ b[15])]
 }
 
-// MUX
+/// 16-bit  MUX
 pub fn mux16(a: [bool; 16], b: [bool; 16], sel: bool) -> [bool; 16] {
     [
         (a[0] && !sel) || (b[0] && sel),
@@ -75,7 +77,7 @@ pub fn mux16(a: [bool; 16], b: [bool; 16], sel: bool) -> [bool; 16] {
     ]
 }
 
-// DMUX
+/// 16-bit  DMUX
 pub fn dmux16(a: [bool; 16], sel: bool) -> ([bool; 16], [bool; 16]) {
     (
         [

@@ -1,11 +1,13 @@
+use crate::gates::gates_b1::{and, or, xor};
+
 pub fn half_adder(a: bool, b: bool) -> (bool, bool) {
-    (a ^ b, a & b)
+    (xor(a, b), and(a, b))
 }
 
 pub fn full_adder(a: bool, b: bool, c: bool) -> (bool, bool) {
     let (sum1, carry1) = half_adder(a, b);
     let (sum2, carry2) = half_adder(sum1, c);
-    (sum2, carry1 | carry2)
+    (sum2, or(carry1, carry2))
 }
 
 pub fn adder_rca_lsb_b16(a: [bool; 16], b: [bool; 16], cin: bool) -> ([bool; 16], bool) {
@@ -34,6 +36,18 @@ pub fn adder_rca_lsb_b16(a: [bool; 16], b: [bool; 16], cin: bool) -> ([bool; 16]
         ],
         cout,
     )
+}
+
+pub fn inc16(input: [bool; 16]) -> [bool; 16] {
+    let (sum, _) = adder_rca_lsb_b16(
+        input,
+        [
+            true, false, false, false, false, false, false, false, false, false, false, false,
+            false, false, false, false,
+        ],
+        false,
+    );
+    sum
 }
 
 mod tests {
@@ -220,4 +234,10 @@ mod tests {
             print!("Test passed.\n");
         }
     }
+
+    // TODO: test adder_rca_b16 with overflow
+    // TODO: test inc16
+
+    #[test]
+    fn test_inc() {}
 }
