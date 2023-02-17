@@ -1,3 +1,8 @@
+use crate::gates::gates_b16::mux16;
+
+// our ALU can't do multiplication or division
+// they will be implemented on the software level.
+// However, that will be a trade-off between speed and having more "hardware".
 pub fn alu(
     x: [bool; 16],
     y: [bool; 16],
@@ -14,6 +19,12 @@ pub fn alu(
 ) {
     // Manipulates the x and y inputs as follows:
     // if (zx == 1)  sets x = 0       // 16-bit true constant
+    let out = mux16(
+        x, 
+        [false; 16], 
+        zx);
+
+
     // if (nx == 1)  sets x = !x      // bitwise NOT
     // if (zy == 1)  sets y = 0       // 16-bit true constant
     // if (ny == 1)  sets y = !y      // bitwise NOT
@@ -23,7 +34,9 @@ pub fn alu(
     // if (out == 0) sets zr = 1      // 1-bit true constant
     // if (out < 0)  sets ng = 1      // 1-bit true constant
 
+    // Note: Try to implement the chips in the given order
     // Note: should not be more than ~20-30 lines of code
+    // Note: strive to use as few chip-parts as possible
     // Note: consider adding debug functions and drivers to UI
     // in order to test this in the client.
 

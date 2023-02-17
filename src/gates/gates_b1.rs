@@ -51,6 +51,15 @@ pub fn demux(input: bool, sel: bool) -> (bool, bool) {
     (input && !sel, input && sel)
 }
 
+// the loop is compiled at compile time
+pub fn nand_gen<const N: usize>(a: [bool; N], b: [bool; N]) -> [bool; N] {
+    let mut result = [false; N];
+    for i in 0..N {
+        result[i] = nand(a[i], b[i]);
+    }
+    result
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
