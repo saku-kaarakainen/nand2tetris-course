@@ -12,6 +12,10 @@ wasm-pack build
 ```
 creates pkg and target - folders
 
+## Notes
+if you need to shrink the size, check this: https://rustwasm.github.io/book/game-of-life/code-size.html
+
+
 # Docs
 https://www.nand2tetris.org/
 
