@@ -176,45 +176,44 @@ pub fn mux16(a: [bool; 16], b: [bool; 16], sel: bool) -> [bool; 16] {
     ]
 }
 
-// TODO: Refactor into using 1-bit demuxes
 /// 16-bit  DMUX
-pub fn dmux16(a: [bool; 16], sel: bool) -> ([bool; 16], [bool; 16]) {
+pub fn demux16(a: [bool; 16], sel: bool) -> ([bool; 16], [bool; 16]) {
     (
         [
-            a[0] && !sel,
-            a[1] && !sel,
-            a[2] && !sel,
-            a[3] && !sel,
-            a[4] && !sel,
-            a[5] && !sel,
-            a[6] && !sel,
-            a[7] && !sel,
-            a[8] && !sel,
-            a[9] && !sel,
-            a[10] && !sel,
-            a[11] && !sel,
-            a[12] && !sel,
-            a[13] && !sel,
-            a[14] && !sel,
-            a[15] && !sel,
+            and(a[0], not(sel)),
+            and(a[1], not(sel)),
+            and(a[2], not(sel)),
+            and(a[3], not(sel)),
+            and(a[4], not(sel)),
+            and(a[5], not(sel)),
+            and(a[6], not(sel)),
+            and(a[7], not(sel)),
+            and(a[8], not(sel)),
+            and(a[9], not(sel)),
+            and(a[10], not(sel)),
+            and(a[11], not(sel)),
+            and(a[12], not(sel)),
+            and(a[13], not(sel)),
+            and(a[14], not(sel)),
+            and(a[15], not(sel)),
         ],
         [
-            a[0] && sel,
-            a[1] && sel,
-            a[2] && sel,
-            a[3] && sel,
-            a[4] && sel,
-            a[5] && sel,
-            a[6] && sel,
-            a[7] && sel,
-            a[8] && sel,
-            a[9] && sel,
-            a[10] && sel,
-            a[11] && sel,
-            a[12] && sel,
-            a[13] && sel,
-            a[14] && sel,
-            a[15] && sel,
+            and(a[0], sel),
+            and(a[1], sel),
+            and(a[2], sel),
+            and(a[3], sel),
+            and(a[4], sel),
+            and(a[5], sel),
+            and(a[6], sel),
+            and(a[7], sel),
+            and(a[8], sel),
+            and(a[9], sel),
+            and(a[10], sel),
+            and(a[11], sel),
+            and(a[12], sel),
+            and(a[13], sel),
+            and(a[14], sel),
+            and(a[15], sel),
         ],
     )
 }
@@ -296,9 +295,9 @@ mod tests {
 
     #[test]
     fn test_dmux() {
-        assert_eq!(dmux16(B16_TRUE, false), (B16_TRUE, B16_FALSE));
-        assert_eq!(dmux16(B16_TRUE, true), (B16_FALSE, B16_TRUE));
-        assert_eq!(dmux16(B16_FALSE, false), (B16_FALSE, B16_FALSE));
-        assert_eq!(dmux16(B16_FALSE, true), (B16_FALSE, B16_FALSE));
+        assert_eq!(demux16(B16_TRUE, false), (B16_TRUE, B16_FALSE));
+        assert_eq!(demux16(B16_TRUE, true), (B16_FALSE, B16_TRUE));
+        assert_eq!(demux16(B16_FALSE, false), (B16_FALSE, B16_FALSE));
+        assert_eq!(demux16(B16_FALSE, true), (B16_FALSE, B16_FALSE));
     }
 }

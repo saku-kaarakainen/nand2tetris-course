@@ -3,52 +3,44 @@ pub fn and(a: bool, b: bool) -> bool {
     a && b
 }
 
-// OR Gate
-pub fn or(a: bool, b: bool) -> bool {
-    // Optimized version.
-    // If you want to make OR gate using AND gate, 
-    // you can use DeMorgan's Law:
-    // !(a && b)
-    a || b
-}
-
 // NOT Gate
 pub fn not(a: bool) -> bool {
     !a
 }
 
+// OR Gate
+pub fn or(a: bool, b: bool) -> bool {
+    not(and(a, b)) // a || b
+}
+
 // XOR Gate
 pub fn xor(a: bool, b: bool) -> bool {
-    // Optimized version.
-    // If you want to make XOR gate using AND gate,
-    // you can use DeMorgan's Law:
-    // !(a && b) && (a || b)
-    a ^ b
+    or(and(a, not(b)), and(not(a), b)) // a ^ b
 }
 
 // NAND Gate
 pub fn nand(a: bool, b: bool) -> bool {
-    !(a && b)
+    not(and(a, b))
 }
 
 // NOR Gate
 pub fn nor(a: bool, b: bool) -> bool {
-    !(a || b)
+    not(or(a, b))
 }
 
 // XNOR Gate
 pub fn xnor(a: bool, b: bool) -> bool {
-    !(a ^ b)
+    not(a ^ b)
 }
 
 // Multiplexer
 pub fn mux(a: bool, b: bool, sel: bool) -> bool {
-    (a && !sel) || (b && sel)
+    or(and(a, not(sel)), and(b, sel))
 }
 
 // Demultiplexer
 pub fn demux(input: bool, sel: bool) -> (bool, bool) {
-    (input && !sel, input && sel)
+    (and(input, not(sel)), and(input, sel))
 }
 
 // the loop is compiled at compile time
