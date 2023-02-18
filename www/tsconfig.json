@@ -1,14 +1,10 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "noImplicitAny": true,
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "sourceMap": true,
-      "declaration": true,
-      "moduleResolution": "node",
-      "outDir": "./dist",
-      "rootDir": "."
-    },
-    "include": ["src"]
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "allowJs": true
+  },
+  "files": ["src/index.ts"]
 }
